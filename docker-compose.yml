@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+  os-app-svc-dc:
+    container_name: os-app-svc-dc
+    image: os-app-img
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    networks:
+      - os-frontend-net-dc
+      - os-backend-net-dc
+    volumes:
+      - appdata:/var/www/html
+    restart: always
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - os-backend-net-dc
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    depends_on:
+      - mongo
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH_USERNAME: ${DB_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${DB_PASSWORD}
+      ME_CONFIG_SITE_SSL_ENABLED: true
+      ME_CONFIG_SITE_SSL_CRT_PATH: /etc/ssl/certs/group99shop.com.crt
+      ME_CONFIG_SITE_SSL_KEY_PATH: /etc/ssl/private/group99shop.com.key
+    volumes:
+      - ./ssl/group99shop.com.crt:/etc/ssl/certs/group99shop.com.crt
+      - ./ssl/group99shop.com.key:/etc/ssl/private/group99shop.com.key
+    networks:
+      - os-frontend-net-dc
+      - os-backend-net-dc
+    restart: always
+
+  proxy:
+    container_name: proxy
+    image: nginx
+    depends_on:
+      - os-app-svc-dc
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl/group99shop.com.crt:/etc/ssl/certs/group99shop.com.crt
+      - ./ssl/group99shop.com.key:/etc/ssl/private/group99shop.com.key
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - os-frontend-net-dc
+    restart: always
+
+volumes:
+  mongodata:
+  appdata:
+
+networks:
+  os-frontend-net-dc:
+  os-backend-net-dc:
+    internal: true
