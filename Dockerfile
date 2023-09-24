@@ -12,6 +12,7 @@ RUN npm install
 #copying the source code of Application into the container dir
 #note you must be in the source code directory and remember COPY is recursive
 COPY node-express/. /usr/src/app
+COPY /. /usr/src/app
 #container exposed network port number
 EXPOSE 3000
 EXPOSE 3001

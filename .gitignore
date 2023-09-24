@@ -10,6 +10,8 @@ pids
 *.pid
 *.seed
 
+ssl/
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
