@@ -11,3 +11,9 @@ mv nodecrud.* ssl/
 mv RootCA.* ssl/
 
 docker build -t crud .
+
+
+# db.createUser({user:'admin',
+# pwd:'admin',
+# roles: [{ role:'readWrite', db: 'crud' }]
+# })
