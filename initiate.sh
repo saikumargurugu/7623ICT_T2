@@ -1,3 +1,5 @@
+git clone https://github.com/ANii693/ToDoList-v2.git
+
 docker pull mongo
 docker pull ngnox
 docker pull ngnix
@@ -17,3 +19,5 @@ docker build -t crud .
 # pwd:'admin',
 # roles: [{ role:'readWrite', db: 'crud' }]
 # })
+
+# db.collectionName.insertOne({ key: "value" })
