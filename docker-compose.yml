@@ -1,16 +1,16 @@
 version: "3.9"
 
 services:
-  node-crud:
-    image: crud
+  todoapp:
+    image: todoapp
     build: .
     depends_on:
       - mongo
     ports:
       - "3000:3000"
     networks:
-      - node-frontend-crud
-      - node-backend-crud
+      - node-frontend-todoapp
+      - node-backend-todoapp
     volumes:
       - appdata:/var/www/html
     restart: always
@@ -26,7 +26,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - node-backend-crud
+      - node-backend-todoapp
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin
@@ -46,30 +46,30 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin
       ME_CONFIG_SITE_SSL_ENABLED: true
-      ME_CONFIG_SITE_SSL_CRT_PATH: /etc/ssl/certs/nodecrud.crt
-      ME_CONFIG_SITE_SSL_KEY_PATH: /etc/ssl/private/nodecrud.key
+      ME_CONFIG_SITE_SSL_CRT_PATH: /etc/ssl/certs/todoapp.crt
+      ME_CONFIG_SITE_SSL_KEY_PATH: /etc/ssl/private/todoapp.key
     volumes:
-      - ./ssl/nodecrud.crt:/etc/ssl/certs/nodecrud.crt
-      - ./ssl/nodecrud.key:/etc/ssl/private/nodecrud.key
+      - ./ssl/todoapp.crt:/etc/ssl/certs/todoapp.crt
+      - ./ssl/todoapp.key:/etc/ssl/private/todoapp.key
     networks:
-      - node-frontend-crud
-      - node-backend-crud
+      - node-frontend-todoapp
+      - node-backend-todoapp
     restart: always
 
   proxy:
     container_name: proxy
     image: nginx
     depends_on:
-      - node-crud
+      - todoapp
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl/nodecrud.crt:/etc/ssl/certs/nodecrud.crt
-      - ./ssl/nodecrud.key:/etc/ssl/private/nodecrud.key
+      - ./ssl/todoapp.crt:/etc/ssl/certs/todoapp.crt
+      - ./ssl/todoapp.key:/etc/ssl/private/todoapp.key
     ports:
       - "80:80"
       - "443:443"
     networks:
-      - node-frontend-crud
+      - node-frontend-todoapp
     restart: always
 
 volumes:
@@ -77,6 +77,6 @@ volumes:
   appdata:
 
 networks:
-  node-frontend-crud:
-  node-backend-crud:
+  node-frontend-todoapp:
+  node-backend-todoapp:
     internal: true
