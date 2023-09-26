@@ -15,10 +15,10 @@ services:
       - appdata:/var/www/html
     restart: always
     environment:
-      - DATABASE_URL=mongodb://mongo:27017/crud
-      - DB_URL=mongodb://mongo:27017/crud
-      - MONGODB_URL=mongodb://mongo:27017/crud
-      - MONGO_DEFAULT_DATABASE=crud
+      - DATABASE_URL=mongodb://mongo:27017/todoapp
+      - DB_URL=mongodb://mongo:27017/todoapp
+      - MONGODB_URL=mongodb://mongo:27017/todoapp
+      - MONGO_DEFAULT_DATABASE=todoapp
       - API_URL=http://localhost:3000
 
   mongo:
