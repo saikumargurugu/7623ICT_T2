@@ -5,14 +5,14 @@ FROM node:latest
 RUN mkdir -p /usr/src/app
 #setting working directory in the container
 WORKDIR /usr/src/app
-#copying the package.json file(contains dependencies) from project source dir to container dir
-COPY node-music-mvc/package.json /usr/src/app
-# installing the dependencies into the container
-RUN npm install
 #copying the source code of Application into the container dir
 #note you must be in the source code directory and remember COPY is recursive
 COPY node-music-mvc/. /usr/src/app
 COPY /. /usr/src/app
+#copying the package.json file(contains dependencies) from project source dir to container dir
+COPY node-music-mvc/package.json /usr/src/app
+# installing the dependencies into the container
+RUN npm install
 #container exposed network port number
 EXPOSE 3000
 EXPOSE 3001

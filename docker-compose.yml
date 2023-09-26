@@ -31,6 +31,7 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: admin
       ME_CONFIG_SITE_ENABLE_ADMIN: true
       ME_CONFIG_SITE_ENABLE_DEBUGGER: true
+      MONGODB_URL:mongodb: http//mongo:27017/crud
       ME_CONFIG_SITE_ENABLE_TRIGGERS: true
 
   mongo-express:
@@ -61,7 +62,7 @@ services:
     depends_on:
       - node-crud
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf
       - ./ssl/nodecrud.crt:/etc/ssl/certs/nodecrud.crt
       - ./ssl/nodecrud.key:/etc/ssl/private/nodecrud.key
     ports:
