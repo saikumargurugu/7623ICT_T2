@@ -1,8 +1,11 @@
 git clone https://github.com/ANii693/ToDoList-v2.git
 
-docker pull mongo
-docker pull ngnox
-docker pull ngnix
+mv ToDoList-v2 todo_list
+
+rm -r ToDoList-v2
+
+# docker pull mongo
+# docker pull ngnix
 
 openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout RootCA.key -out RootCA.pem -subj "/C=US/CN=My-Root-CA"
 openssl x509 -outform pem -in RootCA.pem -out RootCA.crt
