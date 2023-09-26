@@ -16,6 +16,7 @@ services:
     restart: always
     environment:
       - DATABASE_URL=mongodb://mongo:27017/crud
+      - DB_URL=mongodb://mongo:27017/crud
       - MONGODB_URL=mongodb://mongo:27017/crud
       - MONGO_DEFAULT_DATABASE=crud
       - API_URL=http://localhost:3000
